@@ -75,7 +75,7 @@ activitiesDiv.addEventListener('change', (e) => {
           }
         }
       }
-      //Calcutaling total cost of all activities (+)
+      //Calculating total cost of all activities (+)
       let parent = checkbox.parentNode;
       let courseCost = checkbox.getAttribute('data-cost');
       let courseCostNumber = parseInt(courseCost, 10);
@@ -87,10 +87,10 @@ activitiesDiv.addEventListener('change', (e) => {
         let data = courseOptions[i].getAttribute('data-day-and-time');
         if ( data === chosenData && courseOptions[i] !== checkbox) {
             console.log(courseOptions[i]);
-            courseOptions[i].setAttribute('disabled', false);
+            courseOptions[i].removeAttribute('disabled');
         }
       }
-      //Calcutaling total cost of all activities (-)
+      //Calculating total cost of all activities (-)
       let parent = checkbox.parentNode;
       let courseCost = checkbox.getAttribute('data-cost');
       let courseCostNumber = parseInt(courseCost, 10);
