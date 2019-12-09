@@ -86,7 +86,6 @@ activitiesDiv.addEventListener('change', (e) => {
       for (let i=1; i<courseOptions.length; i++) {
         let data = courseOptions[i].getAttribute('data-day-and-time');
         if ( data === chosenData && courseOptions[i] !== checkbox) {
-            console.log(courseOptions[i]);
             courseOptions[i].removeAttribute('disabled');
         }
       }
@@ -99,3 +98,47 @@ activitiesDiv.addEventListener('change', (e) => {
   }
   totalCost.textContent = `Total Cost:  $${totalActivityCost}`;
 });
+
+/*---------------------------------------------------------
+                Payment Method Information
+----------------------------------------------------------*/
+
+const paymentMethod = document.getElementById('payment');
+//Hiding 'Select Method' option
+const selectMethod = document.querySelector('option[value="select method"]');
+selectMethod.style.display = 'none';
+
+//Selectors for this part
+const creditCard = document.querySelector('option[value="credit card"]');
+const paypal = document.querySelector('option[value="paypal"]');
+const bitcoin = document.querySelector('option[value="bitcoin"]');
+const creditCardDiv = document.getElementById('credit-card');
+const paypalDiv = document.getElementById('paypal');
+const bitcoinDiv = document.getElementById('bitcoin');
+
+//Displaying Credit Card as a first payment option
+creditCard.selected = 'true';
+
+//Hiding info about paypal and bitcoin
+paypalDiv.style.display = 'none';
+bitcoinDiv.style.display = 'none';
+
+//Event Listener for changes in payment methods
+paymentMethod.addEventListener('change', () => {
+  if (paypal.selected) {
+    creditCardDiv.style.display = 'none';
+    paypalDiv.style.display = 'block';
+    bitcoinDiv.style.display = 'none';
+  } else if (bitcoin.selected) {
+    creditCardDiv.style.display = 'none';
+    paypalDiv.style.display = 'none';
+    bitcoinDiv.style.display = 'block';
+  } else if (creditCard.selected) {
+    creditCardDiv.style.display = 'block';
+    paypalDiv.style.display = 'none';
+    bitcoinDiv.style.display = 'none';
+  }
+});
+
+
+//end
