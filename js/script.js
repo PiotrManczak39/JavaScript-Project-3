@@ -164,6 +164,7 @@ function emailFieldValidation(email) {
 }
 
 emailFieldValidation(emailField.value)
+
 //Activity Section Validation
 
 let checkboxArray = activitiesDiv.getElementsByTagName('input');
@@ -185,12 +186,17 @@ function checkboxValidation(arr) {
   }
 }
 
-console.log(checkboxValidation(checkboxArray));
+//Credit Card Validation
+const creditCardInput = document.getElementById('cc-num');
 
-
-
-
-
-
+function creditCardValidation(string) {
+  let userInputNumber = parseInt(string, 10);
+  let regex = /^\d{13,16}$/;
+  if (regex.test(userInputNumber)) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 //end
