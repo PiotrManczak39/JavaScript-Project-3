@@ -144,8 +144,7 @@ paymentMethod.addEventListener('change', () => {
            Validation functions
 ---------------------------------------------------*/
 
-//Submit Button
-const submitButton = document.querySelector('button');
+//Validation of Name Section
 
 const nameField = document.getElementById('name');
 function nameFieldValidation() {
@@ -198,5 +197,37 @@ function creditCardValidation(string) {
     return false;
   }
 }
+
+//Zip Code Valuation function
+const zipCode = document.getElementById('zip');
+
+function zipCodeValuation(string) {
+  let userInputZipCode = parseInt(string, 10);
+  let regex = /^\d{5}$/;
+  if (regex.test(userInputZipCode)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+//CVV Valuation function
+const CVV = document.getElementById('cvv');
+
+function CVVInputValidation(string) {
+  let userInputCVV = parseInt(string, 10);
+  let regex = /^\d{3}$/;
+  if (regex.test(userInputCVV)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+console.log(CVVInputValidation(CVV.value));
+
+
+
 
 //end
