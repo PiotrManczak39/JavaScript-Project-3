@@ -140,5 +140,57 @@ paymentMethod.addEventListener('change', () => {
   }
 });
 
+/*---------------------------------------------------
+           Validation functions
+---------------------------------------------------*/
+
+//Submit Button
+const submitButton = document.querySelector('button');
+
+const nameField = document.getElementById('name');
+function nameFieldValidation() {
+  if (nameField.value == '') {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
+//Email validation function
+const emailField = document.getElementById('mail');
+function emailFieldValidation(email) {
+  return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+}
+
+emailFieldValidation(emailField.value)
+//Activity Section Validation
+
+let checkboxArray = activitiesDiv.getElementsByTagName('input');
+
+function checkboxValidation(arr) {
+  let arrChecked = [];
+  let arrNotchecked = [];
+  for (let i=0; i < arr.length; i++) {
+    if (arr[i].checked) {
+      arrChecked.push(arr[i]);
+    } else {
+      arrNotchecked.push([i]);
+    }
+  }
+  if (arrChecked.length > 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+console.log(checkboxValidation(checkboxArray));
+
+
+
+
+
+
 
 //end
