@@ -1,5 +1,4 @@
 
-
 //First text field in focus by default using jQuery.
 $('#name').focus();
 //Hide Other Job Role.
@@ -177,23 +176,22 @@ creditCardError.setAttribute('id', 'creditCardError');
 creditCardError.style.display = 'none';
 
 //Zip Code Error message
-const prependZipCodeError = () => {
-  $('label[for="zip"]').prepend('<p class="error" id="ZC">Zip should be 5 digits long!</p>');
-}
+let ZCError = document.createElement('p');
+ZCError.textContent = 'Zip should be 5 digits long!';
+ZCError.className = 'error';
+let ZCErrorSibiling = creditCardDiv.querySelector('div:nth-child(3)');
+creditCardDiv.insertBefore(ZCError, ZCErrorSibiling);
+ZCError.setAttribute('id', 'ZCError');
+ZCError.style.display = 'none';
+
 //CVV Error message
-const prependCVVError = () => {
-  $('label[for="cvv"]').prepend('<p class="error" id="CVV">CVV should be 3 digits long!</p>');
-}
-
-/*---------------------------------------------------
-           Validation functions
----------------------------------------------------*/
-
-// const removeErrorMessage = (htmlID) => {
-//   let errorParagraphSelector = document.getElementById('htmlID');
-//   let parent = errorParagraphSelector.parentNode;
-//   parent.removeChild(errorParagraphSelector);
-// }
+let CVVError = document.createElement('p');
+CVVError.textContent = 'CVV should be 3 digits long!';
+CVVError.className = 'error';
+let CVVErrorSibiling = creditCardDiv.querySelector('div:nth-child(5)');
+creditCardDiv.insertBefore(CVVError, CVVErrorSibiling);
+CVVError.setAttribute('id', 'CVVError');
+CVVError.style.display = 'none';
 
 /*---------------------------------------------------
            Validation functions
@@ -259,14 +257,12 @@ function zipCodeValuation(string) {
   let userInputZipCode = parseInt(string, 10);
   let regex = /^\d{5}$/;
   if (regex.test(userInputZipCode)) {
-    let ZC = document.getElementById('ZC');
-    ZC.style.display = 'none';
+    ZCError.style.display = 'none';
     return true;
   } else {
-    prependZipCodeError();
+    ZCError.style.display = 'block';
     return false;
   }
-  // return (regex.test(userInputZipCode) ? true : false);
 }
 
 //CVV Valuation function
@@ -275,13 +271,12 @@ function CVVInputValidation(string) {
   let userInputCVV = parseInt(string, 10);
   let regex = /^\d{3}$/;
   if (regex.test(userInputCVV)) {
-    let CVV = document.getElementById('CVV');
-    CVV.style.display = 'none';
+    CVVError.style.display = 'none';
     return true;
   } else {
+    CVVError.style.display = 'block';
     return false;
   }
-  // return (regex.test(userInputCVV) ? true : false);
 }
 
 

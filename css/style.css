@@ -172,7 +172,7 @@ option {
   color: white;
   background-color: #ff0063;
   padding: .4em;
-  text-shadow: 2px -2px gray;
+  text-shadow: 1px -1px gray;
   border-radius: 10px;
   width: 80%;
   margin: 0 auto;
