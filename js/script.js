@@ -141,91 +141,104 @@ paymentMethod.addEventListener('change', () => {
 });
 
 /*---------------------------------------------------
+                 Error messages
+---------------------------------------------------*/
+//Name error Message
+const prependNameError = () => {
+  $('label[for="name"]').prepend('<p class="error">Name field should not be empty!</p>');
+}
+//Email Error Message
+const prependEmailError = () => {
+  $('label[for="mail"]').prepend('<p class="error">It does not look like an email to me!</p>');
+}
+//Checkbox Error Message
+const appendCheckboxesError = () => {
+  const $activitiesErrorParentSelector = $('.activities legend');
+  $activitiesErrorParentSelector.append('<p class="error">You MUST check at least one checkbox, please!</p>');
+}
+//Credit Card Error message
+const prependCreditCardError = () => {
+  $('label[for="cc-num"]').prepend('<p class="error">Credit Card number between 13 and 16 numbers long!</p>');
+}
+//Zip Code Error message
+const prependZipCodeError = () => {
+  $('label[for="zip"]').prepend('<p class="error">Zip should be 5 digits long!</p>');
+}
+//CVV Error message
+const prependCVVError = () => {
+  $('label[for="cvv"]').prepend('<p class="error">CVV should be 3 digits long!</p>');
+}
+
+/*---------------------------------------------------
            Validation functions
 ---------------------------------------------------*/
 
 //Validation of Name Section
-
 const nameField = document.getElementById('name');
 function nameFieldValidation() {
   if (nameField.value == '') {
+    prependNameError();
     return false;
   } else {
     return true;
   }
 }
 
-
 //Email validation function
 const emailField = document.getElementById('mail');
 function emailFieldValidation(email) {
-  return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+  if (/^[^@]+@[^@.]+\.[a-z]+$/i.test(email) == true) {
+    return true;
+  } else {
+    prependEmailError();
+    return false;
+  }
 }
 
-emailFieldValidation(emailField.value)
-
 //Activity Section Validation
-
 let checkboxArray = activitiesDiv.getElementsByTagName('input');
-
 function checkboxValidation(arr) {
   let arrChecked = [];
   let arrNotchecked = [];
   for (let i=0; i < arr.length; i++) {
-    if (arr[i].checked) {
-      arrChecked.push(arr[i]);
-    } else {
-      arrNotchecked.push([i]);
-    }
+    (arr[i].checked ? arrChecked.push(arr[i]) : arrNotchecked.push([i]));
   }
   if (arrChecked.length > 0) {
     return true;
   } else {
+    appendCheckboxesError();
     return false;
   }
 }
 
 //Credit Card Validation
 const creditCardInput = document.getElementById('cc-num');
-
 function creditCardValidation(string) {
   let userInputNumber = parseInt(string, 10);
   let regex = /^\d{13,16}$/;
-  if (regex.test(userInputNumber)) {
-    return true;
-  } else {
-    return false;
-  }
+  return (regex.test(userInputNumber) ? true : false);
 }
 
 //Zip Code Valuation function
 const zipCode = document.getElementById('zip');
-
 function zipCodeValuation(string) {
   let userInputZipCode = parseInt(string, 10);
   let regex = /^\d{5}$/;
-  if (regex.test(userInputZipCode)) {
-    return true;
-  } else {
-    return false;
-  }
+  return (regex.test(userInputZipCode) ? true : false);
 }
-
 
 //CVV Valuation function
 const CVV = document.getElementById('cvv');
-
 function CVVInputValidation(string) {
   let userInputCVV = parseInt(string, 10);
   let regex = /^\d{3}$/;
-  if (regex.test(userInputCVV)) {
-    return true;
-  } else {
-    return false;
-  }
+  return (regex.test(userInputCVV) ? true : false);
 }
 
-console.log(CVVInputValidation(CVV.value));
+
+
+
+
 
 
 
