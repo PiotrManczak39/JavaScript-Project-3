@@ -141,33 +141,59 @@ paymentMethod.addEventListener('change', () => {
 });
 
 /*---------------------------------------------------
-                 Error messages
+                 Error Messages
 ---------------------------------------------------*/
+
 //Name error Message
-const prependNameError = () => {
-  $('label[for="name"]').prepend('<p class="error">Name field should not be empty!</p>');
-}
+let nameError = document.createElement('p');
+nameError.textContent = 'Name field should not be empty!';
+nameError.className = 'error';
+let parentInfo = document.querySelector('fieldset');
+let sibiling = document.querySelector('label[for="name"]');
+parentInfo.insertBefore(nameError, sibiling);
+nameError.setAttribute('id', 'nameError');
+nameError.style.display = 'none';
+
 //Email Error Message
-const prependEmailError = () => {
-  $('label[for="mail"]').prepend('<p class="error">It does not look like an email to me!</p>');
-}
+let emailError = document.createElement('p');
+emailError.textContent = 'It does not look like an email to me!';
+emailError.className = 'error';
+let emailSibiling = document.querySelector('label[for="mail"]');
+parentInfo.insertBefore(emailError, emailSibiling);
+emailError.setAttribute('id', 'emailError');
+emailError.style.display = 'none';
+
 //Checkbox Error Message
-const appendCheckboxesError = () => {
-  const $activitiesErrorParentSelector = $('.activities legend');
-  $activitiesErrorParentSelector.append('<p class="error">You MUST check at least one checkbox, please!</p>');
-}
+const $activitiesErrorParentSelector = $('.activities legend').append('<p class="error" id="checkboxError">You MUST check at least one checkbox, please!</p>');
+$activitiesErrorParentSelector.hide();
+
 //Credit Card Error message
-const prependCreditCardError = () => {
-  $('label[for="cc-num"]').prepend('<p class="error">Credit Card number between 13 and 16 numbers long!</p>');
-}
+let creditCardError = document.createElement('p');
+creditCardError.textContent = 'creditCardError">Credit Card number between 13 and 16 numbers long!';
+creditCardError.className = 'error';
+let creditCardErrorSibiling = document.querySelector('.col-6');
+creditCardDiv.insertBefore(creditCardError, creditCardErrorSibiling);
+creditCardError.setAttribute('id', 'creditCardError');
+creditCardError.style.display = 'none';
+
 //Zip Code Error message
 const prependZipCodeError = () => {
-  $('label[for="zip"]').prepend('<p class="error">Zip should be 5 digits long!</p>');
+  $('label[for="zip"]').prepend('<p class="error" id="ZC">Zip should be 5 digits long!</p>');
 }
 //CVV Error message
 const prependCVVError = () => {
-  $('label[for="cvv"]').prepend('<p class="error">CVV should be 3 digits long!</p>');
+  $('label[for="cvv"]').prepend('<p class="error" id="CVV">CVV should be 3 digits long!</p>');
 }
+
+/*---------------------------------------------------
+           Validation functions
+---------------------------------------------------*/
+
+// const removeErrorMessage = (htmlID) => {
+//   let errorParagraphSelector = document.getElementById('htmlID');
+//   let parent = errorParagraphSelector.parentNode;
+//   parent.removeChild(errorParagraphSelector);
+// }
 
 /*---------------------------------------------------
            Validation functions
@@ -177,9 +203,10 @@ const prependCVVError = () => {
 const nameField = document.getElementById('name');
 function nameFieldValidation() {
   if (nameField.value == '') {
-    prependNameError();
+    nameError.style.display = 'block';
     return false;
   } else {
+    nameError.style.display = 'none';
     return true;
   }
 }
@@ -188,9 +215,10 @@ function nameFieldValidation() {
 const emailField = document.getElementById('mail');
 function emailFieldValidation(email) {
   if (/^[^@]+@[^@.]+\.[a-z]+$/i.test(email) == true) {
+    emailError.style.display = 'none';
     return true;
   } else {
-    prependEmailError();
+    emailError.style.display = 'block';
     return false;
   }
 }
@@ -204,19 +232,25 @@ function checkboxValidation(arr) {
     (arr[i].checked ? arrChecked.push(arr[i]) : arrNotchecked.push([i]));
   }
   if (arrChecked.length > 0) {
+    $activitiesErrorParentSelector.hide();
     return true;
   } else {
-    appendCheckboxesError();
+    $activitiesErrorParentSelector.show();
     return false;
   }
 }
-
 //Credit Card Validation
 const creditCardInput = document.getElementById('cc-num');
 function creditCardValidation(string) {
   let userInputNumber = parseInt(string, 10);
   let regex = /^\d{13,16}$/;
-  return (regex.test(userInputNumber) ? true : false);
+  if (regex.test(userInputNumber)) {
+    creditCardError.style.display = 'none';
+    return true;
+  } else {
+    creditCardError.style.display = 'block';
+    return false;
+  }
 }
 
 //Zip Code Valuation function
@@ -224,7 +258,15 @@ const zipCode = document.getElementById('zip');
 function zipCodeValuation(string) {
   let userInputZipCode = parseInt(string, 10);
   let regex = /^\d{5}$/;
-  return (regex.test(userInputZipCode) ? true : false);
+  if (regex.test(userInputZipCode)) {
+    let ZC = document.getElementById('ZC');
+    ZC.style.display = 'none';
+    return true;
+  } else {
+    prependZipCodeError();
+    return false;
+  }
+  // return (regex.test(userInputZipCode) ? true : false);
 }
 
 //CVV Valuation function
@@ -232,7 +274,14 @@ const CVV = document.getElementById('cvv');
 function CVVInputValidation(string) {
   let userInputCVV = parseInt(string, 10);
   let regex = /^\d{3}$/;
-  return (regex.test(userInputCVV) ? true : false);
+  if (regex.test(userInputCVV)) {
+    let CVV = document.getElementById('CVV');
+    CVV.style.display = 'none';
+    return true;
+  } else {
+    return false;
+  }
+  // return (regex.test(userInputCVV) ? true : false);
 }
 
 
