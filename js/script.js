@@ -163,13 +163,19 @@ emailError.setAttribute('id', 'emailError');
 emailError.style.display = 'none';
 
 //Checkbox Error Message
-const $activitiesErrorParentSelector = $('.activities legend').append('<p class="error" id="checkboxError">You MUST check at least one checkbox, please!</p>');
-$activitiesErrorParentSelector.hide();
+let activitiesError = document.createElement('p');
+activitiesError.textContent = 'You MUST check at least one checkbox, please!';
+activitiesError.className = 'error';
+let activitiviesErrorParent = document.querySelector('.activities');
+let activitiesErrorSibiling = document.querySelector('input[name="all"]').parentNode;
+activitiviesErrorParent.insertBefore(activitiesError, activitiesErrorSibiling);
+activitiesError.setAttribute('id', 'emailError');
+activitiesError.style.display = 'none';
 
 //Credit Card Error message
 let creditCardError = document.createElement('p');
-creditCardError.textContent = 'creditCardError">Credit Card number between 13 and 16 numbers long!';
-creditCardError.className = 'error';
+creditCardError.textContent = 'Credit Card number should be between 13 and 16 numbers long!';
+creditCardError.className = 'errorCC';
 let creditCardErrorSibiling = document.querySelector('.col-6');
 creditCardDiv.insertBefore(creditCardError, creditCardErrorSibiling);
 creditCardError.setAttribute('id', 'creditCardError');
@@ -178,7 +184,7 @@ creditCardError.style.display = 'none';
 //Zip Code Error message
 let ZCError = document.createElement('p');
 ZCError.textContent = 'Zip should be 5 digits long!';
-ZCError.className = 'error';
+ZCError.className = 'errorZC';
 let ZCErrorSibiling = creditCardDiv.querySelector('div:nth-child(3)');
 creditCardDiv.insertBefore(ZCError, ZCErrorSibiling);
 ZCError.setAttribute('id', 'ZCError');
@@ -187,7 +193,7 @@ ZCError.style.display = 'none';
 //CVV Error message
 let CVVError = document.createElement('p');
 CVVError.textContent = 'CVV should be 3 digits long!';
-CVVError.className = 'error';
+CVVError.className = 'errorCVV';
 let CVVErrorSibiling = creditCardDiv.querySelector('div:nth-child(5)');
 creditCardDiv.insertBefore(CVVError, CVVErrorSibiling);
 CVVError.setAttribute('id', 'CVVError');
@@ -230,10 +236,10 @@ function checkboxValidation(arr) {
     (arr[i].checked ? arrChecked.push(arr[i]) : arrNotchecked.push([i]));
   }
   if (arrChecked.length > 0) {
-    $activitiesErrorParentSelector.hide();
+    activitiesError.style.display = 'none';
     return true;
   } else {
-    $activitiesErrorParentSelector.show();
+    activitiesError.style.display = 'block';
     return false;
   }
 }
