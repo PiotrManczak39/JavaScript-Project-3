@@ -270,6 +270,8 @@ function zipCodeValuation(string) {
   if (regex.test(userInputZipCode)) {
     ZCError.style.display = 'none';
     return true;
+  } else if ( zipCode.value === '') {
+    alert('Zip Code Field is Empty!');
   } else {
     ZCError.style.display = 'block';
     return false;
