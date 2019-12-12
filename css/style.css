@@ -180,7 +180,8 @@ option {
   width: 80%;
   margin: 0 auto;
   margin-top: 0.5em;
-  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-size: .75em;
 }
 
 /* =================================
