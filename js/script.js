@@ -11,6 +11,12 @@ $('#colors-js-puns label').text($newText);
 //Hide the colors in the “Color” drop down menu.
 $('#color').hide();
 
+//Displaying and hiding Other job role option
+const jobTitle = document.getElementById('title');
+jobTitle.addEventListener('change', () => {
+  let other = jobTitle.querySelector('option[value="other"]');
+  other.selected ? $('#other-title').show() : $('#other-title').hide();
+});
 /*----------------------------------------------------------
                  T-shirt Selection
 -----------------------------------------------------------*/
@@ -193,6 +199,14 @@ let ZCErrorParent = ZCErrorSibiling.parentNode;
 ZCErrorParent.insertBefore(ZCError, ZCErrorSibiling);
 ZCError.style.display = 'none';
 
+//Zip Code EMPTY Error Message
+let ZCEmptyError = document.createElement('p');
+ZCEmptyError.textContent = 'Zip is empty! Fill it in, please.';
+ZCEmptyError.className = 'errorEmptyZC';
+ZCErrorParent.insertBefore(ZCEmptyError, ZCErrorSibiling);
+ZCEmptyError.style.display = 'none';
+
+
 //CVV Error message
 let CVVError = document.createElement('p');
 CVVError.textContent = 'CVV should be 3 digits long!';
@@ -269,10 +283,13 @@ function zipCodeValuation(string) {
   let regex = /^\d{5}$/;
   if (regex.test(userInputZipCode)) {
     ZCError.style.display = 'none';
+    ZCEmptyError.style.display = 'none';
     return true;
   } else if ( zipCode.value === '') {
-    alert('Zip Code Field is Empty!');
+    ZCEmptyError.style.display = 'block';
+    ZCError.style.display = 'none';
   } else {
+    ZCEmptyError.style.display = 'none';
     ZCError.style.display = 'block';
     return false;
   }
@@ -310,7 +327,9 @@ button.addEventListener('click', (event) => {
   nameFieldValidation(nameField.value);
   emailFieldValidation(emailField.value);
   checkboxValidation(checkboxArray);
+  creditCardValidation(creditCardInput.value);
   zipCodeValuation(zipCode.value);
+  CVVInputValidation(CVV.value)
 });
 
 
