@@ -1,4 +1,10 @@
 
+
+
+
+
+
+
 //First text field in focus by default using jQuery.
 $('#name').focus();
 //Hide Other Job Role.
@@ -178,23 +184,43 @@ activitiviesErrorParent.insertBefore(activitiesError, activitiesErrorSibiling);
 activitiesError.setAttribute('id', 'emailError');
 activitiesError.style.display = 'none';
 
-//Create Errormessage Function
-const createErrorMessage = (text, selector) => {
-  let nowy = document.createElement('p');
-  nowy.textContent = text;
-  nowy.className = 'error';
-  let nowySibiling = document.querySelector(selector);
-  let nowyParent = nowySibiling.parentNode; 
-  nowyParent.insertBefore(nowy, nowySibiling);
-  return nowy;
-}
-const creditCardError = createErrorMessage('Credit Card number should be between 13 and 16 numbers long!', 'label[for="cc-num"]');
+//Credit Card Error message
+
+let creditCardError = document.createElement('p');
+creditCardError.textContent = 'Credit Card number should be between 13 and 16 numbers long!';
+creditCardError.className = 'errorCC';
+creditCardError.setAttribute('id', 'creditCardError');
+let creditCardErrorSibiling = document.querySelector('label[for="cc-num"]');
+let creditCardErrorParent = creditCardErrorSibiling.parentNode;
+creditCardErrorParent.insertBefore(creditCardError, creditCardErrorSibiling);
 creditCardError.style.display = 'none';
-const ZCEmptyError = createErrorMessage('Zip is empty! Fill it in, please.', 'label[for="zip"]');
-ZCEmptyError.style.display = 'none';
-const ZCError = createErrorMessage('Zip should be 5 digits long!', 'label[for="zip"]');
+
+//Zip Code Error message
+let ZCError = document.createElement('p');
+ZCError.textContent = 'Zip should be 5 digits long!';
+ZCError.className = 'errorZC';
+ZCError.setAttribute('id', 'ZCError');
+let ZCErrorSibiling = document.querySelector('label[for="zip"]');
+let ZCErrorParent = ZCErrorSibiling.parentNode;
+ZCErrorParent.insertBefore(ZCError, ZCErrorSibiling);
 ZCError.style.display = 'none';
-const CVVError = createErrorMessage('CVV should be 3 digits long!', 'label[for="cvv"]');
+
+//Zip Code EMPTY Error Message
+let ZCEmptyError = document.createElement('p');
+ZCEmptyError.textContent = 'Zip is empty! Fill it in, please.';
+ZCEmptyError.className = 'errorEmptyZC';
+ZCErrorParent.insertBefore(ZCEmptyError, ZCErrorSibiling);
+ZCEmptyError.style.display = 'none';
+
+
+//CVV Error message
+let CVVError = document.createElement('p');
+CVVError.textContent = 'CVV should be 3 digits long!';
+CVVError.className = 'errorCVV';
+CVVError.setAttribute('id', 'CVVError');
+let CVVErrorSibiling = document.querySelector('label[for="cvv"]');
+let CVVErrorParent = CVVErrorSibiling.parentNode;
+CVVErrorParent.insertBefore(CVVError, CVVErrorSibiling);
 CVVError.style.display = 'none';
 
 /*---------------------------------------------------
@@ -301,18 +327,15 @@ CVV.addEventListener('keyup', () => {
 });
 
 //Submit Button EventListener
-const CCOption = document.querySelector('option[value="credit card"]');
 const button = document.getElementsByTagName('button')[0];
 button.addEventListener('click', (event) => {
-  if (CCOption.selected) {
-    if (!nameFieldValidation(nameField.value) || !emailFieldValidation(emailField.value) || !checkboxValidation(checkboxArray) || !creditCardValidation(creditCardInput.value) || !zipCodeValuation(zipCode.value) || !CVVInputValidation(CVV.value)) {
-      event.preventDefault();
-    }
-  } else if (!CCOption.selected) { 
-    if (!nameFieldValidation(nameField.value) || !emailFieldValidation(emailField.value) || !checkboxValidation(checkboxArray)) {
-      event.preventDefault();
-    }
-  }
+  event.preventDefault();
+  nameFieldValidation(nameField.value);
+  emailFieldValidation(emailField.value);
+  checkboxValidation(checkboxArray);
+  creditCardValidation(creditCardInput.value);
+  zipCodeValuation(zipCode.value);
+  CVVInputValidation(CVV.value)
 });
 
 
@@ -320,6 +343,4 @@ button.addEventListener('click', (event) => {
 
 
 
-
-
-
+//end
