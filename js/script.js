@@ -329,18 +329,24 @@ CVV.addEventListener('keyup', () => {
 //Submit Button EventListener
 const button = document.getElementsByTagName('button')[0];
 button.addEventListener('click', (event) => {
-  event.preventDefault();
-  nameFieldValidation(nameField.value);
-  emailFieldValidation(emailField.value);
-  checkboxValidation(checkboxArray);
-  creditCardValidation(creditCardInput.value);
-  zipCodeValuation(zipCode.value);
-  CVVInputValidation(CVV.value)
+  if (creditCard.selected) {
+    nameFieldValidation(nameField.value);
+    emailFieldValidation(emailField.value);
+    checkboxValidation(checkboxArray);
+    creditCardValidation(creditCardInput.value);
+    zipCodeValuation(zipCode.value);
+    CVVInputValidation(CVV.value);
+    if (!nameFieldValidation(nameField.value) || !emailFieldValidation(emailField.value) || !checkboxValidation(checkboxArray) || !creditCardValidation(creditCardInput.value) || !zipCodeValuation(zipCode.value) || !CVVInputValidation(CVV.value)) {
+      event.preventDefault();
+    }
+  } else if (!creditCard.selected) {
+    nameFieldValidation(nameField.value);
+    emailFieldValidation(emailField.value);
+    checkboxValidation(checkboxArray);
+    if (!nameFieldValidation(nameField.value) || !emailFieldValidation(emailField.value) || !checkboxValidation(checkboxArray)) {
+      event.preventDefault();
+    }
+  }
 });
 
 
-
-
-
-
-//end
