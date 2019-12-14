@@ -273,7 +273,8 @@ CVV.addEventListener('keyup', () => {
 });
 
 //Submit Button EventListener
-document.getElementsByTagName('button')[0].addEventListener('click', (event) => {
+const button = document.getElementsByTagName('button')[0];
+button.addEventListener('click', (event) => {
   if (creditCard.selected) {
     nameFieldValidation(nameField.value);
     emailFieldValidation(emailField.value);
