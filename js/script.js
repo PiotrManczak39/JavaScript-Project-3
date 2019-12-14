@@ -2,7 +2,7 @@
 //First text field in focus by default using jQuery.
 $('#name').focus();
 //Hide Other Job Role.
-$('#other-title').hide();
+$('#other-title').attr("type","text").hide();
 //Hide the “Select Theme” `option` element in the “Design” menu.
 $('#design option:first-child').hide();
 //Update the “Color” field to read “Please select a T-shirt theme”.
@@ -149,73 +149,25 @@ paymentMethod.addEventListener('change', () => {
                  Error Messages
 ---------------------------------------------------*/
 
-//Name error Message
-let nameError = document.createElement('p');
-nameError.textContent = 'Name field should not be empty!';
-nameError.className = 'error';
-let parentInfo = document.querySelector('fieldset');
-let sibiling = document.querySelector('label[for="name"]');
-parentInfo.insertBefore(nameError, sibiling);
-nameError.setAttribute('id', 'nameError');
-nameError.style.display = 'none';
-
-//Email Error Message
-let emailError = document.createElement('p');
-emailError.textContent = 'It does not look like an email to me!';
-emailError.className = 'error';
-let emailSibiling = document.querySelector('label[for="mail"]');
-parentInfo.insertBefore(emailError, emailSibiling);
-emailError.setAttribute('id', 'emailError');
-emailError.style.display = 'none';
-
-//Checkbox Error Message
-let activitiesError = document.createElement('p');
-activitiesError.textContent = 'You MUST check at least one checkbox, please!';
-activitiesError.className = 'error';
-let activitiviesErrorParent = document.querySelector('.activities');
-let activitiesErrorSibiling = document.querySelector('input[name="all"]').parentNode;
-activitiviesErrorParent.insertBefore(activitiesError, activitiesErrorSibiling);
-activitiesError.setAttribute('id', 'emailError');
-activitiesError.style.display = 'none';
-
-//Credit Card Error message
-
-let creditCardError = document.createElement('p');
-creditCardError.textContent = 'Credit Card number should be between 13 and 16 numbers long!';
-creditCardError.className = 'errorCC';
-creditCardError.setAttribute('id', 'creditCardError');
-let creditCardErrorSibiling = document.querySelector('label[for="cc-num"]');
-let creditCardErrorParent = creditCardErrorSibiling.parentNode;
-creditCardErrorParent.insertBefore(creditCardError, creditCardErrorSibiling);
-creditCardError.style.display = 'none';
-
-//Zip Code Error message
-let ZCError = document.createElement('p');
-ZCError.textContent = 'Zip should be 5 digits long!';
-ZCError.className = 'errorZC';
-ZCError.setAttribute('id', 'ZCError');
-let ZCErrorSibiling = document.querySelector('label[for="zip"]');
-let ZCErrorParent = ZCErrorSibiling.parentNode;
-ZCErrorParent.insertBefore(ZCError, ZCErrorSibiling);
-ZCError.style.display = 'none';
-
-//Zip Code EMPTY Error Message
-let ZCEmptyError = document.createElement('p');
-ZCEmptyError.textContent = 'Zip is empty! Fill it in, please.';
-ZCEmptyError.className = 'errorEmptyZC';
-ZCErrorParent.insertBefore(ZCEmptyError, ZCErrorSibiling);
-ZCEmptyError.style.display = 'none';
-
-
-//CVV Error message
-let CVVError = document.createElement('p');
-CVVError.textContent = 'CVV should be 3 digits long!';
-CVVError.className = 'errorCVV';
-CVVError.setAttribute('id', 'CVVError');
-let CVVErrorSibiling = document.querySelector('label[for="cvv"]');
-let CVVErrorParent = CVVErrorSibiling.parentNode;
-CVVErrorParent.insertBefore(CVVError, CVVErrorSibiling);
-CVVError.style.display = 'none';
+//CreateError Function
+const createError = (text, selector) => {
+  let nowyBlad = document.createElement('p');
+  nowyBlad.textContent = text;
+  nowyBlad.className = 'error';
+  let sibiling = document.querySelector(selector);
+  let parent = sibiling.parentNode;
+  parent.insertBefore(nowyBlad, sibiling);
+  nowyBlad.style.display = 'none';
+  return nowyBlad;
+}
+//Errors
+const nameError = createError('Name field should not be empty!', 'label[for="name"]');
+const emailError = createError('It does not look like an email to me!', 'label[for="mail"]');
+const activitiesError = createError('You MUST check at least one checkbox, please!', 'input[name="all"]');
+const creditCardError = createError('Credit Card number should be between 13 and 16 numbers long!', 'label[for="cc-num"]');
+const ZCError = createError('Zip should be 5 digits long!', 'label[for="zip"]');
+const ZCEmptyError = createError('Zip is empty! Fill it in, please.', 'label[for="zip"]');
+const CVVError = createError('CVV should be 3 digits long!', 'label[for="cvv"]');
 
 /*---------------------------------------------------
            Validation functions
@@ -321,20 +273,23 @@ CVV.addEventListener('keyup', () => {
 });
 
 //Submit Button EventListener
-const button = document.getElementsByTagName('button')[0];
-button.addEventListener('click', (event) => {
-  event.preventDefault();
-  nameFieldValidation(nameField.value);
-  emailFieldValidation(emailField.value);
-  checkboxValidation(checkboxArray);
-  creditCardValidation(creditCardInput.value);
-  zipCodeValuation(zipCode.value);
-  CVVInputValidation(CVV.value)
+document.getElementsByTagName('button')[0].addEventListener('click', (event) => {
+  if (creditCard.selected) {
+    nameFieldValidation(nameField.value);
+    emailFieldValidation(emailField.value);
+    checkboxValidation(checkboxArray);
+    creditCardValidation(creditCardInput.value);
+    zipCodeValuation(zipCode.value);
+    CVVInputValidation(CVV.value);
+    if (!nameFieldValidation(nameField.value) || !emailFieldValidation(emailField.value) || !checkboxValidation(checkboxArray) || !creditCardValidation(creditCardInput.value) || !zipCodeValuation(zipCode.value) || !CVVInputValidation(CVV.value)) {
+      event.preventDefault();
+    }
+  } else if (!creditCard.selected) {
+    nameFieldValidation(nameField.value);
+    emailFieldValidation(emailField.value);
+    checkboxValidation(checkboxArray);
+    if (!nameFieldValidation(nameField.value) || !emailFieldValidation(emailField.value) || !checkboxValidation(checkboxArray)) {
+      event.preventDefault();
+    }
+  }
 });
-
-
-
-
-
-
-//end
