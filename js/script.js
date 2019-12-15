@@ -324,7 +324,12 @@ CVV.addEventListener('keyup', () => {
   let term = CVV.value;
   CVVInputValidation(term);
 });
+
+const modalMessage = (nameError, ) => {
+
+}
 //Submit Button EventListener
+const form = document.querySelector('[action="index.html"]');
 const button = document.getElementsByTagName('button')[0];
 button.addEventListener('click', (event) => {
   if (creditCard.selected) {
@@ -336,6 +341,68 @@ button.addEventListener('click', (event) => {
     CVVInputValidation(CVV.value);
     if (!nameFieldValidation(nameField.value) || !emailFieldValidation(emailField.value) || !checkboxValidation(checkboxArray) || !creditCardValidation(creditCardInput.value) || !zipCodeValuation(zipCode.value) || !CVVInputValidation(CVV.value)) {
       event.preventDefault();
+      let modalDiv = document.createElement('div');
+      modalDiv.className = 'bg-modal';
+      form.appendChild(modalDiv);
+      let modalDivInner = document.createElement('div');
+      modalDivInner.className = 'bg-inner';
+      modalDiv.appendChild(modalDivInner);
+      let modalTitle = document.createElement('h3');
+      modalTitle.textContent = 'Submission unsuccesful. See why below:';
+      modalDivInner.appendChild(modalTitle);
+      let modalList = document.createElement('ul');
+      modalDivInner.appendChild(modalList);
+      if (!nameFieldValidation(nameField.value)) {
+        let li = document.createElement('li');
+        if (nameError.style.display == 'block') {
+          li.textContent = 'Both name and surname must be present!';
+        } else {
+          li.textContent = 'Name missing. Fill in the form!';
+        }
+        modalList.appendChild(li);
+      }
+      if (!emailFieldValidation(emailField.value)) {
+        let li = document.createElement('li');
+        if (emailError.style.display == 'block' ) {
+          li.textContent = 'Email does not seem to be correct.';
+        } else {
+          li.textContent = 'Email is missing.';
+        }
+        modalList.appendChild(li);
+      }
+      if (!checkboxValidation(checkboxArray)) {
+        let li = document.createElement('li');
+        li.textContent = 'No checkbox has been checked.';
+        modalList.appendChild(li);
+      }
+      if (!creditCardValidation(creditCardInput.value)) {
+        let li = document.createElement('li');
+        li.textContent = 'Credit Card number is missing or incorrect.';
+        modalList.appendChild(li);
+      }
+      if (!zipCodeValuation(zipCode.value)) {
+        let li = document.createElement('li');
+        if (ZCError.style.display == 'block' ) {
+          li.textContent = 'Zip Code should be t least 5 digits.';
+        } else if (ZCEmptyError.style.display == 'block' ) {
+          li.textContent = 'Zip Code is missing.';
+        }
+        modalList.appendChild(li);
+      }
+      if (!CVVInputValidation(CVV.value)) {
+        let li = document.createElement('li');
+        li.textContent = 'CCV is missing or incorrect.';
+        modalList.appendChild(li);
+      }
+      $(window).scrollTop(0);
+      const modalButton = document.createElement('button');
+      modalButton.textContent = 'Try again. Good luck, matey!';
+      modalButton.setAttribute('type', 'button');
+      modalDivInner.appendChild(modalButton);
+
+      modalButton.addEventListener('click', (e) => {
+        modalDiv.style.display = 'none';
+      });
     }
   } else if (!creditCard.selected) {
     nameFieldValidation(nameField.value);
@@ -343,6 +410,48 @@ button.addEventListener('click', (event) => {
     checkboxValidation(checkboxArray);
     if (!nameFieldValidation(nameField.value) || !emailFieldValidation(emailField.value) || !checkboxValidation(checkboxArray)) {
       event.preventDefault();
+      let modalDiv = document.createElement('div');
+      modalDiv.className = 'bg-modal';
+      form.appendChild(modalDiv);
+      let modalDivInner = document.createElement('div');
+      modalDivInner.className = 'bg-inner';
+      modalDiv.appendChild(modalDivInner);
+      let modalTitle = document.createElement('h3');
+      modalTitle.textContent = 'Submission unsuccesful. See why below:';
+      modalDivInner.appendChild(modalTitle);
+      let modalList = document.createElement('ul');
+      modalDivInner.appendChild(modalList);
+      if (!nameFieldValidation(nameField.value)) {
+        let li = document.createElement('li');
+        if (nameError.style.display == 'block') {
+          li.textContent = 'Both name and surname must be present!';
+        } else {
+          li.textContent = 'Name missing. Fill in the form!';
+        }
+        modalList.appendChild(li);
+      }
+      if (!emailFieldValidation(emailField.value)) {
+        let li = document.createElement('li');
+        if (emailError.style.display == 'block' ) {
+          li.textContent = 'Email does not seem to be correct.';
+        } else {
+          li.textContent = 'Email is missing.';
+        }
+        modalList.appendChild(li);
+      }
+      if (!checkboxValidation(checkboxArray)) {
+        let li = document.createElement('li');
+        li.textContent = 'No checkbox has been checked.';
+        modalList.appendChild(li);
+      }
+      $(window).scrollTop(0);
+      const modalButton = document.createElement('button');
+      modalButton.textContent = 'Try again. Good luck, matey!';
+      modalButton.setAttribute('type', 'button');
+      modalDivInner.appendChild(modalButton);
+      modalButton.addEventListener('click', (e) => {
+        modalDiv.style.display = 'none';
+      });
     }
   }
 });

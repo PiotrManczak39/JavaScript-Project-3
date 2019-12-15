@@ -185,6 +185,34 @@ option {
   font-size: .75em;
 }
 
+.bg-modal {
+  color: white;
+  padding: 20px;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+
+.bg-inner {
+  display: flex;
+  padding: 5%;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  height: 70%;
+  background-color: steelblue;
+  border: 2px solid black;
+  border-radius: 20px;
+}
+
 /* =================================
   Helper Classes
 ==================================== */
