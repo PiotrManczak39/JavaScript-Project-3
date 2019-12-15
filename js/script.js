@@ -3,13 +3,16 @@
 $('#name').focus();
 //Hide Other Job Role.
 $('#other-title').attr("type","text").hide();
+
 //Hide the “Select Theme” `option` element in the “Design” menu.
 $('#design option:first-child').hide();
+
 //Update the “Color” field to read “Please select a T-shirt theme”.
-const $newText = 'Please select a T-shirt theme';
-$('#colors-js-puns label').text($newText);
+// const $newText = 'Please select a T-shirt theme';
+// $('#colors-js-puns label').text($newText);
 //Hide the colors in the “Color” drop down menu.
-$('#color').hide();
+const colorMenu = document.getElementById('colors-js-puns');
+colorMenu.style.display = 'none';
 
 //Displaying and hiding Other job role option
 const jobTitle = document.getElementById('title');
@@ -24,9 +27,9 @@ jobTitle.addEventListener('change', () => {
 const colorSelection = document.getElementById('color');
 const design = document.getElementById('design');
 design.addEventListener('change', () => {
-  colorSelection.style.display = 'block';
+  colorMenu.style.display = 'block';
   let colorTitle = document.querySelector('#colors-js-puns label');
-  colorTitle.textContent  = 'Color';
+  colorTitle.textContent  = 'Color:';
 
   //Options variables
   let cornflowerblue = colorSelection.querySelector('option:nth-child(1)');
@@ -160,9 +163,11 @@ const createError = (text, selector) => {
   nowyBlad.style.display = 'none';
   return nowyBlad;
 }
-//Errors
-const nameError = createError('Name field should not be empty!', 'label[for="name"]');
+//Errors Creation
+const nameError = createError('Type your name and surname, please', 'label[for="name"]');
+const nameEmptyError = createError('Name field should not be empty!', 'label[for="name"]');
 const emailError = createError('It does not look like an email to me!', 'label[for="mail"]');
+const emailEmptyError = createError('Type your email, please!', 'label[for="mail"]');
 const activitiesError = createError('You MUST check at least one checkbox, please!', 'input[name="all"]');
 const creditCardError = createError('Credit Card number should be between 13 and 16 numbers long!', 'label[for="cc-num"]');
 const ZCError = createError('Zip should be 5 digits long!', 'label[for="zip"]');
@@ -176,27 +181,38 @@ const CVVError = createError('CVV should be 3 digits long!', 'label[for="cvv"]')
 //Validation of Name Section
 const nameField = document.getElementById('name');
 function nameFieldValidation() {
-  if (nameField.value == '') {
+  let regex = /^[a-zA-Z]+ ([a-zA-z]+)?[- ]?[a-zA-Z]{2,}$/;
+  if (!regex.test(nameField.value) && !(nameField.value === '')) {
     nameError.style.display = 'block';
+    nameEmptyError.style.display = 'none';
+    return false;
+  } else  if ( nameField.value === '') {
+    nameEmptyError.style.display = 'block';
+    nameError.style.display = 'none';
     return false;
   } else {
     nameError.style.display = 'none';
+    nameEmptyError.style.display = 'none';
     return true;
   }
 }
-
 //Email validation function
 const emailField = document.getElementById('mail');
 function emailFieldValidation(email) {
-  if (/^[^@]+@[^@.]+\.[a-z]+$/i.test(email) == true) {
+  if (/^[^@]+@[^@.]+\.[a-z]+$/i.test(email)) {
     emailError.style.display = 'none';
+    emailEmptyError.style.display = 'none';
     return true;
+  } else  if ( emailField.value === '') {
+    emailEmptyError.style.display = 'block';
+    emailError.style.display = 'none';
+    return false;
   } else {
+    emailEmptyError.style.display = 'none';
     emailError.style.display = 'block';
     return false;
   }
 }
-
 //Activity Section Validation
 let checkboxArray = activitiesDiv.getElementsByTagName('input');
 function checkboxValidation(arr) {
@@ -227,8 +243,8 @@ function creditCardValidation(string) {
     return false;
   }
 }
-
-//Zip Code Valuation function
+//Zip Code Valuation function for an empty input
+//and wrong ammount of digits
 const zipCode = document.getElementById('zip');
 function zipCodeValuation(string) {
   let userInputZipCode = parseInt(string, 10);
@@ -246,7 +262,6 @@ function zipCodeValuation(string) {
     return false;
   }
 }
-
 //CVV Valuation function
 const CVV = document.getElementById('cvv');
 function CVVInputValidation(string) {
@@ -260,6 +275,44 @@ function CVVInputValidation(string) {
     return false;
   }
 }
+//Zipcode Event listener
+zipCode.addEventListener('keyup', () => {
+  zipCodeValuation(zipCode.value);
+});
+
+//Activities Event listener
+activitiesDiv.addEventListener('change', (e) => {
+  if (event.target.tagName == 'INPUT') {
+    let checkbox = event.target;
+    if (checkbox.checked) {
+      activitiesError.style.display = 'none';
+    }
+  }
+});
+// activitiesDiv.addEventListener('blur', (e) => {
+//   if (event.target.tagName == 'INPUT') {
+//     let checkbox = event.target;
+//     if (!checkbox.checked) {
+//       activitiesError.style.display = 'block';
+//     }
+//   }
+// });
+
+//Email Event listener
+emailField.addEventListener('keyup', () => {
+  emailFieldValidation(emailField.value);
+});
+emailField.addEventListener('blur', () => {
+  emailFieldValidation(emailField.value);
+});
+
+//Name Event Listener
+nameField.addEventListener('keyup', () => {
+  nameFieldValidation(nameField.value);
+});
+nameField.addEventListener('blur', () => {
+  nameFieldValidation(nameField.value);
+});
 
 //Credit Card Event Listener
 creditCardInput.addEventListener('keyup', () => {
@@ -271,12 +324,11 @@ CVV.addEventListener('keyup', () => {
   let term = CVV.value;
   CVVInputValidation(term);
 });
-
 //Submit Button EventListener
 const button = document.getElementsByTagName('button')[0];
 button.addEventListener('click', (event) => {
   if (creditCard.selected) {
-    nameFieldValidation(nameField.value);
+    nameFieldValidation();
     emailFieldValidation(emailField.value);
     checkboxValidation(checkboxArray);
     creditCardValidation(creditCardInput.value);
