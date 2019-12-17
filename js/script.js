@@ -175,7 +175,7 @@ const CVVError = createError('CVV should be 3 digits long!', 'label[for="cvv"]')
 //Validation of Name Section
 const nameField = document.getElementById('name');
 function nameFieldValidation() {
-  let regex = /^[a-zA-Z]+ ([a-z'.A-z]+)?[- ]?[a-zA-Z]{2,}$/;
+  let regex = /^[a-zA-Z]+ ([a-z'.A-z]+)?[- ]?[a-z'A-Z]{2,}$/;
   if (!regex.test(nameField.value) && !(nameField.value === '')) {
     nameError.style.display = 'block';
     nameEmptyError.style.display = 'none';
