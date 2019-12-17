@@ -6,11 +6,6 @@ $('#other-title').attr("type","text").hide();
 
 //Hide the “Select Theme” `option` element in the “Design” menu.
 $('#design option:first-child').hide();
-
-//Update the “Color” field to read “Please select a T-shirt theme”.
-// const $newText = 'Please select a T-shirt theme';
-// $('#colors-js-puns label').text($newText);
-//Hide the colors in the “Color” drop down menu.
 const colorMenu = document.getElementById('colors-js-puns');
 colorMenu.style.display = 'none';
 
@@ -23,7 +18,6 @@ jobTitle.addEventListener('change', () => {
 /*----------------------------------------------------------
                  T-shirt Selection
 -----------------------------------------------------------*/
-
 const colorSelection = document.getElementById('color');
 const design = document.getElementById('design');
 design.addEventListener('change', () => {
@@ -181,7 +175,7 @@ const CVVError = createError('CVV should be 3 digits long!', 'label[for="cvv"]')
 //Validation of Name Section
 const nameField = document.getElementById('name');
 function nameFieldValidation() {
-  let regex = /^[a-zA-Z]+ ([a-zA-z]+)?[- ]?[a-zA-Z]{2,}$/;
+  let regex = /^[a-zA-Z]+ ([a-z'.A-z]+)?[- ]?[a-zA-Z]{2,}$/;
   if (!regex.test(nameField.value) && !(nameField.value === '')) {
     nameError.style.display = 'block';
     nameEmptyError.style.display = 'none';
@@ -233,9 +227,9 @@ function checkboxValidation(arr) {
 //Credit Card Validation
 const creditCardInput = document.getElementById('cc-num');
 function creditCardValidation(string) {
-  let userInputNumber = parseInt(string, 10);
+  // let userInputNumber = parseInt(string, 10);
   let regex = /^\d{13,16}$/;
-  if (regex.test(userInputNumber)) {
+  if (regex.test(string)) {
     creditCardError.style.display = 'none';
     return true;
   } else {
@@ -247,9 +241,9 @@ function creditCardValidation(string) {
 //and wrong ammount of digits
 const zipCode = document.getElementById('zip');
 function zipCodeValuation(string) {
-  let userInputZipCode = parseInt(string, 10);
+  // let userInputZipCode = parseInt(string, 10);
   let regex = /^\d{5}$/;
-  if (regex.test(userInputZipCode)) {
+  if (regex.test(string)) {
     ZCError.style.display = 'none';
     ZCEmptyError.style.display = 'none';
     return true;
@@ -265,9 +259,9 @@ function zipCodeValuation(string) {
 //CVV Valuation function
 const CVV = document.getElementById('cvv');
 function CVVInputValidation(string) {
-  let userInputCVV = parseInt(string, 10);
+  // let userInputCVV = parseInt(string, 10);
   let regex = /^\d{3}$/;
-  if (regex.test(userInputCVV)) {
+  if (regex.test(string)) {
     CVVError.style.display = 'none';
     return true;
   } else {
@@ -289,14 +283,6 @@ activitiesDiv.addEventListener('change', (e) => {
     }
   }
 });
-// activitiesDiv.addEventListener('blur', (e) => {
-//   if (event.target.tagName == 'INPUT') {
-//     let checkbox = event.target;
-//     if (!checkbox.checked) {
-//       activitiesError.style.display = 'block';
-//     }
-//   }
-// });
 
 //Email Event listener
 emailField.addEventListener('keyup', () => {
